@@ -1,0 +1,11 @@
+body {
+  text-align: center;
+}
+
+.clicks {
+  font-style: italic;
+}
+
+img {
+  cursor: pointer;
+}
