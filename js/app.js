@@ -1,16 +1,29 @@
-let CAT1_CLICKS = 0;
-let CAT2_CLICKS = 0;
+// JavaScript to run my cat clicker application
+// October 20, 2018
 
-let CAT1_NAME = "Ghost";
-let CAT2_NAME = "Candy";
+class Cat {
+  // attributes
+  constructor(catName, imgLoc, imgAlt) {
+    let name = catName;
+    let img = imgLoc;
+    let altText = imgAlt;
+    let clicks = 0;
+  }
 
-const CAT1 = document.getElementById("catImage1");
-const CAT2 = document.getElementById("catImage2");
+  // methods
+  click() {
+    CAT1_CLICKS += 1;
+    document.getElementById("catClicks1").innerText = CAT1_CLICKS;
+  }
+}
 
-document.getElementById("catName1").innerText = CAT1_NAME;
-document.getElementById("catName2").innerText = CAT2_NAME;
+let cat1 = new Cat('Ghost', './img/cat1.jpg', 'Cat. Thanks to poplinre for the photo via https://www.flickr.com/photos/poplinre/625069434/in/photostream/.');
+let cat2 = new Cat('Candy', './img/cat2.jpg', 'Cat. Thanks to chewie for the photo via https://www.flickr.com/photos/chewie/2290467335.');
+let cat3 = new Cat('Ghost', './img/cat3.jpg', 'Cat. 3');
+let cat4 = new Cat('Ghost', './img/cat4.jpg', 'Cat. 4');
+let cat5 = new Cat('Ghost', './img/cat5.jpg', 'Cat. 5');
 
-CAT1.addEventListener(
+CAT.addEventListener(
   "click",
   function() {
     CAT1_CLICKS += 1;
@@ -18,55 +31,3 @@ CAT1.addEventListener(
   },
   false
 );
-
-CAT2.addEventListener(
-  "click",
-  function() {
-    CAT2_CLICKS += 1;
-    document.getElementById("catClicks2").innerText = CAT2_CLICKS;
-  },
-  false
-);
-
-// document.images[0].addEventListener("click", function(event) {
-//   // console.log(event.target);
-//   // console.log(event);
-//   CAT_CLICKS += 1;
-//   document.getElementById("clicks").innerText = CAT_CLICKS;
-// });
-
-
-
-// SAMPLE CODE
-// FROM https://classroom.udacity.com/nanodegrees/nd001/parts/b29af831-fa50-4fe9-b30d-ad48476664d1/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3417188540/concepts/34803486710923
-
-// clear the screen for testing
-document.body.innerHTML = '';
-
-var nums = [1,2,3];
-
-// // Let's loop over the numbers in our array
-// for (var i = 0; i < nums.length; i++) {
-
-//     // This is the number we're on...
-//     var num = nums[i];
-
-//     // We're creating a DOM element for the number
-//     var elem = document.createElement('div');
-//     elem.textContent = num;
-
-//     // ... and when we click, alert the value of `num`
-//     elem.addEventListener('click', (function(numCopy) {
-//         return function() {
-//             alert(numCopy);
-//         };
-//     })(num));
-
-//     // // ... because this version does not work:
-//     //     // ... and when we click, alert the value of `num`
-//     //     elem.addEventListener('click', function() {
-//     //       alert(num);
-//     //   });
-
-//     document.body.appendChild(elem);
-// };
