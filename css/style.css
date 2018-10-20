@@ -2,16 +2,39 @@ body {
   text-align: center;
 }
 
-#catClicks {
-  font-style: italic;
+h1 {
+  display: inline;
+}
+
+menu {
+  display: flex;
+  margin:0 auto;
+  outline: 1px black solid;
+  max-width: 400px;
+  width: 35%;
+}
+
+li {
+  display: inline-block;
+  padding: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  outline: 1px gray dotted;
+  max-width: 400px;
+}
+
+li:hover {
+  background-color: lightblue;
 }
 
 img {
   cursor: pointer;
+  max-height: 300px;
   max-width: 400px;
 }
 
-li {
-  font-size: 0.8em;
-  cursor: pointer;
+.stronger {
+  font-style: italic;
+  font-weight: bold;
 }
+

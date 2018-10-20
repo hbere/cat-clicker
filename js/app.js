@@ -26,7 +26,7 @@ class Cat {
     CAT_NAME.innerText = this.name;
     CAT_CLICKS.innerText = this.clicks;
     CAT_IMG.src = this.src;
-    CAT_IMG.altText = this.altText;
+    CAT_IMG.alt = this.altText;
   }
 }
 
@@ -36,35 +36,35 @@ cats.push(
   new Cat(
     "Ghost",
     "./img/cat1.jpg",
-    "Cat. Thanks to poplinre for the photo via https://www.flickr.com/photos/poplinre/625069434/in/photostream/."
+    "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k."
   )
 );
 cats.push(
   new Cat(
     "Candy",
     "./img/cat2.jpg",
-    "Cat. Thanks to chewie for the photo via https://www.flickr.com/photos/chewie/2290467335."
+    "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
   )
 );
 cats.push(
   new Cat(
     "Lozada",
     "./img/cat3.jpg",
-    "Cat. https://unsplash.com/photos/b079C-_tUbM"
+    "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
   )
 );
 cats.push(
   new Cat(
     "Pearl",
     "./img/cat4.jpg",
-    "Cat. https://unsplash.com/photos/NodtnCsLdTE"
+    "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE."
   )
 );
 cats.push(
   new Cat(
     "Irma",
     "./img/cat5.jpg",
-    "Cat. https://unsplash.com/photos/eMzblc6JmXM"
+    "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM."
   )
 );
 let currentCat = cats[0];
