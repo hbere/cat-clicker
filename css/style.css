@@ -2,10 +2,16 @@ body {
   text-align: center;
 }
 
-.clicks {
+#catClicks {
   font-style: italic;
 }
 
 img {
+  cursor: pointer;
+  max-width: 400px;
+}
+
+li {
+  font-size: 0.8em;
   cursor: pointer;
 }

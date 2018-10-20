@@ -1,33 +1,128 @@
 // JavaScript to run my cat clicker application
 // October 20, 2018
 
+// Global variables
+const CAT_NAME = document.getElementById("catName");
+const CAT_CLICKS = document.getElementById("catClicks");
+const CAT_IMG = document.getElementById("catImg");
+
+// Define class Cat
 class Cat {
   // attributes
-  constructor(catName, imgLoc, imgAlt) {
-    let name = catName;
-    let img = imgLoc;
-    let altText = imgAlt;
-    let clicks = 0;
+  constructor(catName, src, altText) {
+    this.name = catName;
+    this.clicks = 0;
+    this.src = src;
+    this.altText = altText;
   }
 
   // methods
   click() {
-    CAT1_CLICKS += 1;
-    document.getElementById("catClicks1").innerText = CAT1_CLICKS;
+    this.clicks += 1;
+    CAT_CLICKS.innerText = this.clicks;
+  }
+
+  load() {
+    CAT_NAME.innerText = this.name;
+    CAT_CLICKS.innerText = this.clicks;
+    CAT_IMG.src = this.src;
+    CAT_IMG.altText = this.altText;
   }
 }
 
-let cat1 = new Cat('Ghost', './img/cat1.jpg', 'Cat. Thanks to poplinre for the photo via https://www.flickr.com/photos/poplinre/625069434/in/photostream/.');
-let cat2 = new Cat('Candy', './img/cat2.jpg', 'Cat. Thanks to chewie for the photo via https://www.flickr.com/photos/chewie/2290467335.');
-let cat3 = new Cat('Ghost', './img/cat3.jpg', 'Cat. 3');
-let cat4 = new Cat('Ghost', './img/cat4.jpg', 'Cat. 4');
-let cat5 = new Cat('Ghost', './img/cat5.jpg', 'Cat. 5');
+// Define specific cats
+let cats = new Array();
+cats.push(
+  new Cat(
+    "Ghost",
+    "./img/cat1.jpg",
+    "Cat. Thanks to poplinre for the photo via https://www.flickr.com/photos/poplinre/625069434/in/photostream/."
+  )
+);
+cats.push(
+  new Cat(
+    "Candy",
+    "./img/cat2.jpg",
+    "Cat. Thanks to chewie for the photo via https://www.flickr.com/photos/chewie/2290467335."
+  )
+);
+cats.push(
+  new Cat(
+    "Lozada",
+    "./img/cat3.jpg",
+    "Cat. https://unsplash.com/photos/b079C-_tUbM"
+  )
+);
+cats.push(
+  new Cat(
+    "Pearl",
+    "./img/cat4.jpg",
+    "Cat. https://unsplash.com/photos/NodtnCsLdTE"
+  )
+);
+cats.push(
+  new Cat(
+    "Irma",
+    "./img/cat5.jpg",
+    "Cat. https://unsplash.com/photos/eMzblc6JmXM"
+  )
+);
+let currentCat = cats[0];
 
-CAT.addEventListener(
+// Add cat menu
+(function() {
+  for (cat of cats) {
+    let myHTML = `<li>${cat.name}</li>`;
+    document.querySelector("menu").innerHTML += myHTML;
+  }
+})();
+
+// Add cat menu functionality
+(function() {
+  cats.forEach((cat, index) => {
+    let menuItem = document.querySelectorAll("li")[index];
+    // console.log(index);
+
+    menuItem.addEventListener('click', function() {
+      currentCat = cats[index];
+      currentCat.load(); 
+    })
+  });
+})();
+
+// Event listener for when cat image is clicked
+CAT_IMG.addEventListener(
   "click",
   function() {
-    CAT1_CLICKS += 1;
-    document.getElementById("catClicks1").innerText = CAT1_CLICKS;
+    currentCat.click();
   },
   false
 );
+
+// // OLD
+// // ... and when we click, alert the value of `num`
+// CAT_IMG.addEventListener(
+//   "click",
+//   (function(currentCatCopy) {
+//     return function() {
+//       alert(currentCatCopy.clicks);
+//     };
+//   })(currentCat)
+// );
+
+// Load first cat
+currentCat.load();
+
+// // TEST SCRIPTS
+// console.log(currentCat.name);
+// console.log(currentCat.clicks);
+// console.log(currentCat.src);
+// console.log(currentCat.altText);
+// console.log(cats[0].name);
+// console.log(cats[0].clicks);
+// console.log(cats[0].src);
+// console.log(cats[0].altText);
+// console.log(CAT_NAME.innerText);
+// console.log(CAT_CLICKS.innerText);
+// console.log(CAT_IMG.src);
+// console.log(CAT_IMG.altText);
