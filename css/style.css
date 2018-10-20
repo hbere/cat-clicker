@@ -9,7 +9,6 @@ h1 {
 menu {
   display: flex;
   margin:0 auto;
-  outline: 1px black solid;
   max-width: 400px;
   width: 35%;
 }
@@ -21,6 +20,7 @@ li {
   cursor: pointer;
   outline: 1px gray dotted;
   max-width: 400px;
+  list-style-type: none;
 }
 
 li:hover {
