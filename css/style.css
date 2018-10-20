@@ -8,7 +8,7 @@ h1 {
 
 menu {
   display: flex;
-  margin:0 auto;
+  margin: 0 auto;
   max-width: 400px;
   width: 35%;
 }
@@ -37,4 +37,3 @@ img {
   font-style: italic;
   font-weight: bold;
 }
-

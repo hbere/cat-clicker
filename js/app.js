@@ -83,10 +83,10 @@ let currentCat = cats[0];
     let menuItem = document.querySelectorAll("li")[index];
     // console.log(index);
 
-    menuItem.addEventListener('click', function() {
+    menuItem.addEventListener("click", function() {
       currentCat = cats[index];
-      currentCat.load(); 
-    })
+      currentCat.load();
+    });
   });
 })();
 
