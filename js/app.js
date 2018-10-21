@@ -60,6 +60,26 @@ let octopus = {
       "./img/cat1.jpg",
       "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k."
     );
+    this.addNewCat(
+      "Candy",
+      "./img/cat2.jpg",
+      "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
+    );
+    this.addNewCat(
+      "Lozada",
+      "./img/cat3.jpg",
+      "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
+    );
+    this.addNewCat(
+      "Pearl",
+      "./img/cat4.jpg",
+      "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE."
+    );
+    this.addNewCat(
+      "Irma",
+      "./img/cat5.jpg",
+      "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM."
+    );
   },
 
   // Clicks on a cat
