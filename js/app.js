@@ -3,11 +3,10 @@
 // October 21, 2018
 
 
-// Elements
+// DOM elements
 const CAT_NAME = document.getElementById("catName");
 const CAT_CLICKS = document.getElementById("catClicks");
 const CAT_IMG = document.getElementById("catImg");
-let CURRENT_CAT_INDEX = 0;
 
 
 // MVO
@@ -41,6 +40,9 @@ let model = {
 };
 
 let octopus = {
+  // Current cat index
+  CURRENT_CAT_INDEX: 0,
+
   // Adds a new cat
   addNewCat: function (catName, src, altText) {
     model.add({
@@ -62,18 +64,20 @@ let octopus = {
 
   // Clicks on a cat
   clickOnCat: function () {
-    model.incrementClicks(CURRENT_CAT_INDEX);
-    view_cat.render(model.getCat(CURRENT_CAT_INDEX));
+    model.incrementClicks(this.CURRENT_CAT_INDEX);
+    view_cat.render(model.getCat(this.CURRENT_CAT_INDEX));
   },
 
   // Initiatlizes the octopus
   init: function () {
-    // Initiatize model & add data
+    // Initiatize model
     model.init();
-    this.addAllCats();
-    let cat = model.getCat(CURRENT_CAT_INDEX);
 
-    // Initialize cat image
+    // Load data
+    this.addAllCats();
+
+    // Initialize view
+    let cat = model.getCat(this.CURRENT_CAT_INDEX);
     view_cat.init(cat);
   }
 }
