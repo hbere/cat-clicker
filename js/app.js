@@ -25,14 +25,14 @@ let model = {
     localStorage.cats = JSON.stringify(data);
   },
 
-  // Returns a cat for use in the octopus
+  // Returns a cat
   getCat: function (index) {
     let data = JSON.parse(localStorage.cats);
     return data[index];
   },
 
   // Returns all cats
-  getAllCats: function() {
+  getAllCats: function () {
     let data = JSON.parse(localStorage.cats);
     return data;
   },
@@ -72,7 +72,7 @@ let octopus = {
       "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
     );
     this.addNewCat(
-      "Lozada",
+      "Gift",
       "./img/cat3.jpg",
       "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
     );
@@ -105,6 +105,30 @@ let octopus = {
     // Initialize view
     let cat = model.getCat(this.CURRENT_CAT_INDEX);
     view_cat.init(cat);
+
+    // Add view event listener
+    CAT_IMG.addEventListener(
+      "click",
+      function () {
+        octopus.clickOnCat();
+      },
+      false
+    );
+
+    // Initialize menu
+    let cats = model.getAllCats();
+    view_menu.init(cats);
+
+    // Add menu event listeners
+    cats.forEach((cat, index) => {
+      let menuItem = document.querySelectorAll("li")[index];
+      menuItem.addEventListener('click', (function (indexCopy) {
+        return function () {
+          this.CURRENT_CAT_INDEX = indexCopy;
+          view_cat.render(model.getCat(this.CURRENT_CAT_INDEX));
+        };
+      })(index));
+    });
   }
 }
 
@@ -115,15 +139,6 @@ let view_cat = {
     CAT_CLICKS.innerText = currentCat.clicks;
     CAT_IMG.src = currentCat.src;
     CAT_IMG.alt = currentCat.altText;
-
-    // Add cat image event listener
-    CAT_IMG.addEventListener(
-      "click",
-      function () {
-        octopus.clickOnCat();
-      },
-      false
-    );
   },
   render: function (currentCat) {
     // Set values
@@ -135,27 +150,20 @@ let view_cat = {
 };
 
 let view_menu = {
-  init: function () {
-    let cats = model.getAllCats;
-
+  init: function (cats) {
     // Draw menu
     for (cat of cats) {
       let myHTML = `<li>${cat.name}</li>`;
       document.querySelector("menu").innerHTML += myHTML;
     }
-
-    // Add menu event listeners
-    cats.forEach((cat, index) => {
-      let menuItem = document.querySelectorAll("li")[index];
-      // console.log(index);
-      menuItem.addEventListener("click", function () {
-        currentCat = cats[index];
-        currentCat.load();
-      });
-    });
   }
 };
 
 
 localStorage.clear();
 octopus.init();
+
+
+
+
+
