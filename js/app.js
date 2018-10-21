@@ -1,128 +1,126 @@
 // JavaScript to run my cat clicker application
-// October 20, 2018
+// Now using MVO (a.k.a. MVC a.k.a. MV*)
+// October 21, 2018
 
-// Global variables
-const CAT_NAME = document.getElementById("catName");
-const CAT_CLICKS = document.getElementById("catClicks");
-const CAT_IMG = document.getElementById("catImg");
-
-// Define class Cat
-class Cat {
-  // attributes
-  constructor(catName, src, altText) {
-    this.name = catName;
-    this.clicks = 0;
-    this.src = src;
-    this.altText = altText;
+let model = {
+  init: function () {
+    if (!localStorage.cats) {
+      localStorage.cats = JSON.stringify([]);
+    }
+  },
+  add: function (cat) {
+    let data = JSON.parse(localStorage.cats);
+    data.push(cat);
+    localStorage.cats = JSON.stringify(data);
+  },
+  getAllCats: function () {
+    return JSON.parse(localStorage.cats);
   }
+};
 
-  // methods
-  click() {
+let octopus = {
+  currentCatIndex: 0,
+  addNewCat: function (catName, src, altText) {
+    model.add({
+      name: catName,
+      clicks: 0,
+      src: src,
+      altText: altText
+    });
+  },
+  addAllCats: function () {
+    this.addNewCat(
+      "Ghost",
+      "./img/cat1.jpg",
+      "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k."
+    );
+    this.addNewCat(
+      "Candy",
+      "./img/cat2.jpg",
+      "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
+    );
+    this.addNewCat(
+      "Lozada",
+      "./img/cat3.jpg",
+      "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
+    );
+    this.addNewCat(
+      "Pearl",
+      "./img/cat4.jpg",
+      "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE."
+    );
+    this.addNewCat(
+      "Irma",
+      "./img/cat5.jpg",
+      "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM."
+    );
+  },
+  clickOnCat: function () {
+    let cats = model.getAllCats();
     this.clicks += 1;
     CAT_CLICKS.innerText = this.clicks;
-  }
+  },
+  init: function () {
+    let cats = model.getAllCats();
 
-  load() {
-    CAT_NAME.innerText = this.name;
-    CAT_CLICKS.innerText = this.clicks;
-    CAT_IMG.src = this.src;
-    CAT_IMG.alt = this.altText;
+    // Initiatize model & add data
+    model.init();
+    this.addAllCats();
+
+    // Initialize menu
+    view_menu.init();
+
+    // Initialize cat image
+    let currentCat = cats[this.currentCatIndex];
+    view_cat.init(currentCat);
+
+    // Add cat image event listener
+    CAT_IMG.addEventListener(
+      "click",
+      function () {
+        octopus.clickOnCat();
+      },
+      false
+    );
   }
 }
 
-// Define specific cats
-let cats = new Array();
-cats.push(
-  new Cat(
-    "Ghost",
-    "./img/cat1.jpg",
-    "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k."
-  )
-);
-cats.push(
-  new Cat(
-    "Candy",
-    "./img/cat2.jpg",
-    "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
-  )
-);
-cats.push(
-  new Cat(
-    "Lozada",
-    "./img/cat3.jpg",
-    "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
-  )
-);
-cats.push(
-  new Cat(
-    "Pearl",
-    "./img/cat4.jpg",
-    "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE."
-  )
-);
-cats.push(
-  new Cat(
-    "Irma",
-    "./img/cat5.jpg",
-    "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM."
-  )
-);
-let currentCat = cats[0];
+let view_menu = {
+  init: function () {
+    let cats = model.getAllCats();
 
-// Add cat menu
-(function() {
-  for (cat of cats) {
-    let myHTML = `<li>${cat.name}</li>`;
-    document.querySelector("menu").innerHTML += myHTML;
-  }
-})();
+    // Draw menu
+    for (cat of cats) {
+      let myHTML = `<li>${cat.name}</li>`;
+      document.querySelector("menu").innerHTML += myHTML;
+    }
 
-// Add cat menu functionality
-(function() {
-  cats.forEach((cat, index) => {
-    let menuItem = document.querySelectorAll("li")[index];
-    // console.log(index);
-
-    menuItem.addEventListener("click", function() {
-      currentCat = cats[index];
-      currentCat.load();
+    // Add menu event listeners
+    cats.forEach((cat, index) => {
+      let menuItem = document.querySelectorAll("li")[index];
+      // console.log(index);
+      menuItem.addEventListener("click", function () {
+        currentCat = cats[index];
+        currentCat.load();
+      });
     });
-  });
-})();
+  }
+};
 
-// Event listener for when cat image is clicked
-CAT_IMG.addEventListener(
-  "click",
-  function() {
-    currentCat.click();
-  },
-  false
-);
+let view_cat = {
+  init: function (currentCat) {
+    // Elements
+    const CAT_NAME = document.getElementById("catName");
+    const CAT_CLICKS = document.getElementById("catClicks");
+    const CAT_IMG = document.getElementById("catImg");
 
-// // OLD
-// // ... and when we click, alert the value of `num`
-// CAT_IMG.addEventListener(
-//   "click",
-//   (function(currentCatCopy) {
-//     return function() {
-//       alert(currentCatCopy.clicks);
-//     };
-//   })(currentCat)
-// );
+    // Set values
+    CAT_NAME.innerText = currentCat.name;
+    CAT_CLICKS.innerText = currentCat.clicks;
+    CAT_IMG.src = currentCat.src;
+    CAT_IMG.alt = currentCat.altText;
+  }
+};
 
-// Load first cat
-currentCat.load();
-
-// // TEST SCRIPTS
-// console.log(currentCat.name);
-// console.log(currentCat.clicks);
-// console.log(currentCat.src);
-// console.log(currentCat.altText);
-// console.log(cats[0].name);
-// console.log(cats[0].clicks);
-// console.log(cats[0].src);
-// console.log(cats[0].altText);
-// console.log(CAT_NAME.innerText);
-// console.log(CAT_CLICKS.innerText);
-// console.log(CAT_IMG.src);
-// console.log(CAT_IMG.altText);
+localStorage.clear();
+octopus.init();
