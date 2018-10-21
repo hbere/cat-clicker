@@ -31,6 +31,12 @@ let model = {
     return data[index];
   },
 
+  // Returns all cats
+  getAllCats: function() {
+    let data = JSON.parse(localStorage.cats);
+    return data;
+  },
+
   // Increments a cat's clicks
   incrementClicks: function (index) {
     let data = JSON.parse(localStorage.cats);
@@ -125,6 +131,28 @@ let view_cat = {
     CAT_CLICKS.innerText = currentCat.clicks;
     CAT_IMG.src = currentCat.src;
     CAT_IMG.alt = currentCat.altText;
+  }
+};
+
+let view_menu = {
+  init: function () {
+    let cats = model.getAllCats;
+
+    // Draw menu
+    for (cat of cats) {
+      let myHTML = `<li>${cat.name}</li>`;
+      document.querySelector("menu").innerHTML += myHTML;
+    }
+
+    // Add menu event listeners
+    cats.forEach((cat, index) => {
+      let menuItem = document.querySelectorAll("li")[index];
+      // console.log(index);
+      menuItem.addEventListener("click", function () {
+        currentCat = cats[index];
+        currentCat.load();
+      });
+    });
   }
 };
 
