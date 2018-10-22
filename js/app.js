@@ -4,12 +4,14 @@
 
 // TODO look for inspiration @ https://github.com/udacity/ud989-cat-clicker-premium-vanilla
 // TODO update to meet Cat Clicker Professional Pro specs @
-  // https://classroom.udacity.com/nanodegrees/nd001/parts/b29af831-fa50-4fe9-b30d-ad48476664d1/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3437288625/concepts/35309290390923
+// https://classroom.udacity.com/nanodegrees/nd001/parts/b29af831-fa50-4fe9-b30d-ad48476664d1/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3437288625/concepts/35309290390923
 
 // DOM elements
 const CAT_NAME = document.getElementById("catName");
 const CAT_CLICKS = document.getElementById("catClicks");
 const CAT_IMG = document.getElementById("catImg");
+const ADMIN_BUTTON = document.getElementById("adminButton");
+const CANCEL_BUTTON = document.getElementById("cancelButton");
 
 
 // MVO
@@ -110,9 +112,9 @@ let octopus = {
     let cat = model.getCat(model.currentCatIndex);
     view_cat.init(cat);
 
-    // Add view event listener
+    // Add cat image event listener
     CAT_IMG.addEventListener('click', function () {
-        octopus.clickOnCat(model.currentCatIndex);
+      octopus.clickOnCat(model.currentCatIndex);
     });
 
     // Initialize menu
@@ -128,6 +130,16 @@ let octopus = {
           view_cat.render(model.getCat(model.currentCatIndex));
         };
       })(index));
+    });
+
+    // Add Admin button event listener
+    ADMIN_BUTTON.addEventListener('click', function () {
+      document.getElementById("adminArea").classList.remove('hideAdminArea');
+    });
+
+    // Add Cancel button event listener
+    ADMIN_BUTTCANCEL_BUTTONON.addEventListener('click', function () {
+      document.getElementById("adminArea").classList.add('hideAdminArea');
     });
   }
 }
@@ -154,7 +166,7 @@ let view_menu = {
     // Draw menu
     for (cat of cats) {
       let myHTML = `<li>${cat.name}</li>`;
-      document.querySelector("menu").innerHTML += myHTML;
+      document.querySelector("ul").innerHTML += myHTML;
     }
   }
 };

@@ -1,4 +1,29 @@
-body {
+li {
+  cursor: pointer;
+  display: inline;
+  padding: 5px;
+  outline: 1px gray dotted;
+}
+
+li:hover {
+  background-color: lightblue;
+}
+
+img {
+  cursor: pointer;
+  height: 250px;
+}
+
+.stronger {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.hideAdminArea {
+  visibility: hidden;
+}
+
+/* body {
   text-align: center;
 }
 
@@ -13,27 +38,14 @@ menu {
   width: 35%;
 }
 
+ul {
+  display: inline;
+  margin: 0 auto;
+}
+
 li {
-  display: inline-block;
-  padding: 5px;
   font-size: 1.2em;
   cursor: pointer;
-  outline: 1px gray dotted;
   max-width: 400px;
   list-style-type: none;
-}
-
-li:hover {
-  background-color: lightblue;
-}
-
-img {
-  cursor: pointer;
-  max-height: 300px;
-  max-width: 400px;
-}
-
-.stronger {
-  font-style: italic;
-  font-weight: bold;
-}
+} */
