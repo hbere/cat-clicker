@@ -1,4 +1,4 @@
-// JavaScript to run my cat clicker application
+// JavaScript for my cat clicker application
 // Now using MVO (a.k.a. MVC a.k.a. MV*)
 // October 21, 2018
 
