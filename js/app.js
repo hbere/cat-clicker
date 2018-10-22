@@ -2,16 +2,21 @@
 // Now using MVO (a.k.a. MVC a.k.a. MV*)
 // October 21, 2018
 
+// TODO look for inspiration @ https://github.com/udacity/ud989-cat-clicker-premium-vanilla
+// TODO update to meet Cat Clicker Professional Pro specs @
+  // https://classroom.udacity.com/nanodegrees/nd001/parts/b29af831-fa50-4fe9-b30d-ad48476664d1/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3437288625/concepts/35309290390923
 
 // DOM elements
 const CAT_NAME = document.getElementById("catName");
 const CAT_CLICKS = document.getElementById("catClicks");
 const CAT_IMG = document.getElementById("catImg");
-let CURRENT_CAT_INDEX = 0; // Current cat index
 
 
 // MVO
 let model = {
+  // Current cat
+  currentCatIndex: 0, // Current cat index
+
   // Initiatlizes the data model
   init: function () {
     if (!localStorage.cats) {
@@ -47,14 +52,6 @@ let model = {
 };
 
 let octopus = {
-  returnCurrentCatIndex: function() {
-    return CURRENT_CAT_INDEX;
-  },
-
-  updateCurrentCat: function(newIndex) {
-    CURRENT_CAT_INDEX = newIndex;
-  },
-
   // Adds a new cat
   addNewCat: function (catName, src, altText) {
     model.add({
@@ -96,27 +93,26 @@ let octopus = {
 
   // Clicks on a cat
   clickOnCat: function () {
-    model.incrementClicks(CURRENT_CAT_INDEX);
-    view_cat.render(model.getCat(CURRENT_CAT_INDEX));
+    model.incrementClicks(model.currentCatIndex);
+    view_cat.render(model.getCat(model.currentCatIndex));
   },
 
   // Initiatlizes the octopus
   init: function () {
     // Initiatize model
     localStorage.removeItem('cats');
-      // localStorage.clear();
     model.init();
 
     // Load data
     this.addAllCats();
 
     // Initialize view
-    let cat = model.getCat(CURRENT_CAT_INDEX);
+    let cat = model.getCat(model.currentCatIndex);
     view_cat.init(cat);
 
     // Add view event listener
     CAT_IMG.addEventListener('click', function () {
-        octopus.clickOnCat(octopus.returnCurrentCatIndex());
+        octopus.clickOnCat(model.currentCatIndex);
     });
 
     // Initialize menu
@@ -128,8 +124,8 @@ let octopus = {
       let menuItem = document.querySelectorAll("li")[index];
       menuItem.addEventListener('click', (function (indexCopy) {
         return function () {
-          octopus.updateCurrentCat(indexCopy);
-          view_cat.render(model.getCat(indexCopy));
+          model.currentCatIndex = indexCopy;
+          view_cat.render(model.getCat(model.currentCatIndex));
         };
       })(index));
     });
