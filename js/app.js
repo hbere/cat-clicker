@@ -103,6 +103,8 @@ let octopus = {
   // Initiatlizes the octopus
   init: function () {
     // Initiatize model
+    localStorage.removeItem('cats');
+      // localStorage.clear();
     model.init();
 
     // Load data
@@ -162,10 +164,4 @@ let view_menu = {
 };
 
 
-localStorage.clear();
 octopus.init();
-
-
-
-
-
