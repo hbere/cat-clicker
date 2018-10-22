@@ -7,6 +7,7 @@
 const CAT_NAME = document.getElementById("catName");
 const CAT_CLICKS = document.getElementById("catClicks");
 const CAT_IMG = document.getElementById("catImg");
+let CURRENT_CAT_INDEX = 0; // Current cat index
 
 
 // MVO
@@ -46,8 +47,13 @@ let model = {
 };
 
 let octopus = {
-  // Current cat index
-  CURRENT_CAT_INDEX: 0,
+  returnCurrentCatIndex: function() {
+    return CURRENT_CAT_INDEX;
+  },
+
+  updateCurrentCat: function(newIndex) {
+    CURRENT_CAT_INDEX = newIndex;
+  },
 
   // Adds a new cat
   addNewCat: function (catName, src, altText) {
@@ -90,8 +96,8 @@ let octopus = {
 
   // Clicks on a cat
   clickOnCat: function () {
-    model.incrementClicks(this.CURRENT_CAT_INDEX);
-    view_cat.render(model.getCat(this.CURRENT_CAT_INDEX));
+    model.incrementClicks(CURRENT_CAT_INDEX);
+    view_cat.render(model.getCat(CURRENT_CAT_INDEX));
   },
 
   // Initiatlizes the octopus
@@ -103,17 +109,13 @@ let octopus = {
     this.addAllCats();
 
     // Initialize view
-    let cat = model.getCat(this.CURRENT_CAT_INDEX);
+    let cat = model.getCat(CURRENT_CAT_INDEX);
     view_cat.init(cat);
 
     // Add view event listener
-    CAT_IMG.addEventListener(
-      "click",
-      function () {
-        octopus.clickOnCat();
-      },
-      false
-    );
+    CAT_IMG.addEventListener('click', function () {
+        octopus.clickOnCat(octopus.returnCurrentCatIndex());
+    });
 
     // Initialize menu
     let cats = model.getAllCats();
@@ -124,8 +126,8 @@ let octopus = {
       let menuItem = document.querySelectorAll("li")[index];
       menuItem.addEventListener('click', (function (indexCopy) {
         return function () {
-          this.CURRENT_CAT_INDEX = indexCopy;
-          view_cat.render(model.getCat(this.CURRENT_CAT_INDEX));
+          octopus.updateCurrentCat(indexCopy);
+          view_cat.render(model.getCat(indexCopy));
         };
       })(index));
     });
