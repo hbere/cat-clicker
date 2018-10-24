@@ -46,9 +46,18 @@ let model = {
   },
 
   // Increments a cat's clicks
-  incrementClicks: function (index) {
+  incrementClicks: function () {
     let data = JSON.parse(localStorage.cats);
-    data[index].clicks += 1;
+    data[this.currentCatIndex].clicks += 1;
+    localStorage.cats = JSON.stringify(data);
+  },
+
+  // Update cat
+  updateCat: function (name, url, clicks) {
+    let data = JSON.parse(localStorage.cats);
+    data[this.currentCatIndex].name = name;
+    data[this.currentCatIndex].url = url;
+    data[this.currentCatIndex].clicks = clicks;
     localStorage.cats = JSON.stringify(data);
   }
 };
@@ -95,14 +104,14 @@ let octopus = {
 
   // Clicks on a cat
   clickOnCat: function () {
-    model.incrementClicks(model.currentCatIndex);
+    model.incrementClicks();
     view_cat.render(model.getCat(model.currentCatIndex));
   },
 
   // Initiatlizes the octopus
   init: function () {
     // Initiatize model
-    localStorage.removeItem('cats');
+    // localStorage.removeItem('cats');
     model.init();
 
     // Load data
@@ -141,7 +150,21 @@ let octopus = {
     ADMIN_BUTTCANCEL_BUTTONON.addEventListener('click', function () {
       document.getElementById("adminArea").classList.add('hideAdminArea');
     });
+  },
+
+  // Populate form with currentCat data
+  popForm: function() {
+    let cat = model.getCat(model.currentCatIndex);
+  },
+
+  // Save form data
+  saveForm: function() {
+    // let name = TODO form name;
+    // let url = TODO form url;
+    // let clicks = TODO form clicks;
+    model.updateCat(name, url, clicks);
   }
+
 }
 
 let view_cat = {
