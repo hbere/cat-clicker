@@ -22,3 +22,11 @@ img {
 .hideAdminArea {
   display: none;
 }
+
+.font-small {
+  font-size: 0.87em;
+}
+
+.subtle {
+  color: darkslategray;
+}
