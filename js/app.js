@@ -6,184 +6,132 @@
 // TODO update to meet Cat Clicker Professional Pro specs @
 // https://classroom.udacity.com/nanodegrees/nd001/parts/b29af831-fa50-4fe9-b30d-ad48476664d1/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3437288625/concepts/35309290390923
 
-// DOM elements
+// DOM ELEMENTS
 const CAT_NAME = document.getElementById("catName");
 const CAT_CLICKS = document.getElementById("catClicks");
 const CAT_IMG = document.getElementById("catImg");
 const ADMIN_BUTTON = document.getElementById("adminButton");
+const ADMIN_AREA = document.getElementById("adminArea");
 const CANCEL_BUTTON = document.getElementById("cancelButton");
 
 
-// MVO
+// MODEL
 let model = {
   // Current cat
-  currentCatIndex: 0, // Current cat index
+  currentCat: null, // Current cat index
 
-  // Initiatlizes the data model
-  init: function () {
-    if (!localStorage.cats) {
-      localStorage.cats = JSON.stringify([]);
-    }
+  // Cats
+  cats: [{
+    name: "Ghost",
+    clicks: 0,
+    src: "./img/cat1.jpg",
+    altText: "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k."
   },
-
-  // Adds a cat
-  add: function (cat) {
-    let data = JSON.parse(localStorage.cats);
-    data.push(cat);
-    localStorage.cats = JSON.stringify(data);
+  {
+    name: "Candy",
+    clicks: 0,
+    src: "./img/cat2.jpg",
+    altText: "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
   },
-
-  // Returns a cat
-  getCat: function (index) {
-    let data = JSON.parse(localStorage.cats);
-    return data[index];
+  {
+    name: "Gift",
+    clicks: 0,
+    src: "./img/cat3.jpg",
+    altText: "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
   },
-
-  // Returns all cats
-  getAllCats: function () {
-    let data = JSON.parse(localStorage.cats);
-    return data;
+  {
+    name: "Pearl",
+    clicks: 0,
+    src: "./img/cat4.jpg",
+    altText: "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE."
   },
-
-  // Increments a cat's clicks
-  incrementClicks: function () {
-    let data = JSON.parse(localStorage.cats);
-    data[this.currentCatIndex].clicks += 1;
-    localStorage.cats = JSON.stringify(data);
-  },
-
-  // Update cat
-  updateCat: function (name, url, clicks) {
-    let data = JSON.parse(localStorage.cats);
-    data[this.currentCatIndex].name = name;
-    data[this.currentCatIndex].url = url;
-    data[this.currentCatIndex].clicks = clicks;
-    localStorage.cats = JSON.stringify(data);
-  }
+  {
+    name: "Irma",
+    clicks: 0,
+    src: "./img/cat5.jpg",
+    altText: "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM."
+  }]
 };
 
+// OCTOPUS
 let octopus = {
-  // Adds a new cat
-  addNewCat: function (catName, src, altText) {
-    model.add({
-      name: catName,
-      clicks: 0,
-      src: src,
-      altText: altText
-    });
-  },
-
-  // Adds all cats - populates the database
-  addAllCats: function () {
-    this.addNewCat(
-      "Ghost",
-      "./img/cat1.jpg",
-      "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k."
-    );
-    this.addNewCat(
-      "Candy",
-      "./img/cat2.jpg",
-      "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
-    );
-    this.addNewCat(
-      "Gift",
-      "./img/cat3.jpg",
-      "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
-    );
-    this.addNewCat(
-      "Pearl",
-      "./img/cat4.jpg",
-      "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE."
-    );
-    this.addNewCat(
-      "Irma",
-      "./img/cat5.jpg",
-      "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM."
-    );
-  },
-
-  // Clicks on a cat
-  clickOnCat: function () {
-    model.incrementClicks();
-    view_cat.render(model.getCat(model.currentCatIndex));
-  },
-
   // Initiatlizes the octopus
   init: function () {
     // Initiatize model
-    // localStorage.removeItem('cats');
-    model.init();
-
-    // Load data
-    this.addAllCats();
+    model.currentCat = model.cats[0];
 
     // Initialize view
-    let cat = model.getCat(model.currentCatIndex);
-    view_cat.init(cat);
+    view_cat.init(model.currentCat);
 
     // Add cat image event listener
     CAT_IMG.addEventListener('click', function () {
-      octopus.clickOnCat(model.currentCatIndex);
+      model.currentCat.clicks += 1;
+      view_cat.render(model.currentCat);
     });
 
     // Initialize menu
-    let cats = model.getAllCats();
-    view_menu.init(cats);
+    view_menu.init(model.cats);
 
     // Add menu event listeners
-    cats.forEach((cat, index) => {
-      let menuItem = document.querySelectorAll("li")[index];
-      menuItem.addEventListener('click', (function (indexCopy) {
-        return function () {
-          model.currentCatIndex = indexCopy;
-          view_cat.render(model.getCat(model.currentCatIndex));
-        };
-      })(index));
-    });
+    for (let i = 0; i < model.cats.length; i++) {
+      let menuItem = document.querySelectorAll("li")[i];
+      menuItem.addEventListener('click', function () {
+        view_cat.render(model.cats[i]);
+      });
+    }
 
     // Add Admin button event listener
     ADMIN_BUTTON.addEventListener('click', function () {
-      document.getElementById("adminArea").classList.remove('hideAdminArea');
+      ADMIN_AREA.classList.remove('hideAdminArea');
     });
 
     // Add Cancel button event listener
-    ADMIN_BUTTCANCEL_BUTTONON.addEventListener('click', function () {
-      document.getElementById("adminArea").classList.add('hideAdminArea');
+    CANCEL_BUTTON.addEventListener('click', function () {
+      ADMIN_AREA.classList.add('hideAdminArea');
     });
   },
 
   // Populate form with currentCat data
-  popForm: function() {
-    let cat = model.getCat(model.currentCatIndex);
+  popForm: function () {
+    let cat = model.currentCat;
+    // ...
   },
 
   // Save form data
-  saveForm: function() {
+  saveForm: function () {
     // let name = TODO form name;
     // let url = TODO form url;
     // let clicks = TODO form clicks;
-    model.updateCat(name, url, clicks);
-  }
+    octopus.updateCat(name, url, clicks);
+  },
 
+  // Update cat
+  updateCat: function (name, url, clicks) {
+    model.currentCat.name = name;
+    model.currentCat.url = url;
+    model.currentCat.clicks = clicks;
+  }
 }
 
+// CAT VIEW
 let view_cat = {
-  init: function (currentCat) {
+  init: function (cat) {
     // Set values
-    CAT_NAME.innerText = currentCat.name;
-    CAT_CLICKS.innerText = currentCat.clicks;
-    CAT_IMG.src = currentCat.src;
-    CAT_IMG.alt = currentCat.altText;
+    CAT_NAME.innerText = cat.name;
+    CAT_CLICKS.innerText = cat.clicks;
+    CAT_IMG.src = cat.src;
+    CAT_IMG.alt = cat.altText;
   },
-  render: function (currentCat) {
+  render: function (cat) {
     // Set values
-    CAT_NAME.innerText = currentCat.name;
-    CAT_CLICKS.innerText = currentCat.clicks;
-    CAT_IMG.src = currentCat.src;
-    CAT_IMG.alt = currentCat.altText;
+    CAT_NAME.innerText = cat.name;
+    CAT_CLICKS.innerText = cat.clicks;
+    CAT_IMG.src = cat.src;
+    CAT_IMG.alt = cat.altText;
   }
 };
 
+// MENU VIEW
 let view_menu = {
   init: function (cats) {
     // Draw menu
