@@ -12,6 +12,7 @@ const CAT_CLICKS = document.getElementById("catClicks");
 const CAT_IMG = document.getElementById("catImg");
 const ADMIN_BUTTON = document.getElementById("adminButton");
 const ADMIN_AREA = document.getElementById("adminArea");
+const SAVE_BUTTON = document.getElementById("saveButton");
 const CANCEL_BUTTON = document.getElementById("cancelButton");
 
 
@@ -84,11 +85,13 @@ let octopus = {
     // Add Admin button event listener
     ADMIN_BUTTON.addEventListener('click', function () {
       ADMIN_AREA.classList.remove('hideAdminArea');
+      // ADMIN_AREA.style.display = 'block';
     });
 
     // Add Cancel button event listener
     CANCEL_BUTTON.addEventListener('click', function () {
       ADMIN_AREA.classList.add('hideAdminArea');
+      // ADMIN_AREA.style.display = 'none';
     });
   },
 

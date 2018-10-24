@@ -20,32 +20,5 @@ img {
 }
 
 .hideAdminArea {
-  visibility: hidden;
+  display: none;
 }
-
-/* body {
-  text-align: center;
-}
-
-h1 {
-  display: inline;
-}
-
-menu {
-  display: flex;
-  margin: 0 auto;
-  max-width: 400px;
-  width: 35%;
-}
-
-ul {
-  display: inline;
-  margin: 0 auto;
-}
-
-li {
-  font-size: 1.2em;
-  cursor: pointer;
-  max-width: 400px;
-  list-style-type: none;
-} */
