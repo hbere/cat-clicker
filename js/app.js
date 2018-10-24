@@ -64,10 +64,20 @@ let octopus = {
     view_cat.init(model.currentCat);
 
     // Add cat image event listener
-    CAT_IMG.addEventListener('click', function () {
-      model.currentCat.clicks += 1;
-      view_cat.render(model.currentCat);
-    });
+    // CAT_IMG.addEventListener('click', function () {
+    //   model.currentCat.clicks += 1;
+    //   view_cat.render(model.currentCat);
+    // });
+
+
+    CAT_IMG.addEventListener('click', (function (catCopy) {
+      return function () {
+        model.currentCat = catCopy;
+        model.currentCat.clicks += 1;
+        view_cat.render(model.currentCat);
+      };
+    })(model.currentCat));
+
 
     // Initialize menu
     view_menu.init(model.cats);
@@ -128,6 +138,9 @@ let view_cat = {
     CAT_CLICKS.innerText = cat.clicks;
     CAT_IMG.src = cat.src;
     CAT_IMG.alt = cat.altText;
+  },
+  renderClicks: function (cat) {
+    CAT_CLICKS.innerText = cat.clicks;
   }
 };
 
