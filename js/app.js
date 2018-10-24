@@ -79,34 +79,34 @@ let octopus = {
       menuItem.addEventListener('click', function () {
         view_cat.render(model.cats[i]);
         model.currentCat = model.cats[i];
+        ADMIN_AREA.classList.add('hideAdminArea');
       });
     }
 
-    // Add Admin button event listener
+    // Add admin button event listener
     ADMIN_BUTTON.addEventListener('click', function () {
       ADMIN_AREA.classList.remove('hideAdminArea');
-      // ADMIN_AREA.style.display = 'block';
+      document.getElementById('input_name').value = model.currentCat.name;
+      document.getElementById('input_src').value = model.currentCat.src;
+      document.getElementById('input_clicks').value = model.currentCat.clicks;
+      ADMIN_BUTTON.disabled = true;
+    });
+
+    // Add save button event listener
+    SAVE_BUTTON.addEventListener('click', function () {
+      model.currentCat.name = document.getElementById('input_name').value;
+      model.currentCat.src = document.getElementById('input_src').value;
+      model.currentCat.clicks = Number(document.getElementById('input_clicks').value);
+      ADMIN_AREA.classList.add('hideAdminArea');
+      ADMIN_BUTTON.disabled = false;
+      view_cat.render(model.currentCat);
     });
 
     // Add Cancel button event listener
     CANCEL_BUTTON.addEventListener('click', function () {
       ADMIN_AREA.classList.add('hideAdminArea');
-      // ADMIN_AREA.style.display = 'none';
+      ADMIN_BUTTON.disabled = false;
     });
-  },
-
-  // Populate form with currentCat data
-  popForm: function () {
-    let cat = model.currentCat;
-    // ...
-  },
-
-  // Save form data
-  saveForm: function () {
-    // let name = TODO form name;
-    // let url = TODO form url;
-    // let clicks = TODO form clicks;
-    octopus.updateCat(name, url, clicks);
   },
 
   // Update cat
