@@ -26,31 +26,36 @@ let model = {
     name: "Ghost",
     clicks: 0,
     src: "./img/cat1.jpg",
-    altText: "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k."
+    altText: "Cat. Thanks to NeONBRAND for the photo via https://unsplash.com/photos/UETa8mfu38k.",
+    index: 0
   },
   {
     name: "Candy",
     clicks: 0,
     src: "./img/cat2.jpg",
-    altText: "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8."
+    altText: "Cat. Thanks to Cat Mapper (Max Ogden) for the photo via https://unsplash.com/photos/EcsCeS6haJ8.",
+    index: 1
   },
   {
     name: "Gift",
     clicks: 0,
     src: "./img/cat3.jpg",
-    altText: "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM."
+    altText: "Cat. Thanks to Timothy Meinberg for the photo via https://unsplash.com/photos/b079C-_tUbM.",
+    index: 2
   },
   {
     name: "Pearl",
     clicks: 0,
     src: "./img/cat4.jpg",
-    altText: "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE."
+    altText: "Cat. Thanks to Mikhail Vasilyev for the photo via https://unsplash.com/photos/NodtnCsLdTE.",
+    index: 3
   },
   {
     name: "Irma",
     clicks: 0,
     src: "./img/cat5.jpg",
-    altText: "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM."
+    altText: "Cat. Thanks to Kari Shea for the photo via https://unsplash.com/photos/eMzblc6JmXM.",
+    index: 4
   }]
 };
 
@@ -79,17 +84,13 @@ let octopus = {
       menuItem.addEventListener('click', function () {
         view_cat.render(model.cats[i]);
         model.currentCat = model.cats[i];
-        ADMIN_AREA.classList.add('hideAdminArea');
+        view_admin.hide();
       });
     }
 
     // Add admin button event listener
     ADMIN_BUTTON.addEventListener('click', function () {
-      ADMIN_AREA.classList.remove('hideAdminArea');
-      document.getElementById('input_name').value = model.currentCat.name;
-      document.getElementById('input_src').value = model.currentCat.src;
-      document.getElementById('input_clicks').value = model.currentCat.clicks;
-      ADMIN_BUTTON.disabled = true;
+      view_admin.show(model.currentCat);
     });
 
     // Add save button event listener
@@ -97,23 +98,15 @@ let octopus = {
       model.currentCat.name = document.getElementById('input_name').value;
       model.currentCat.src = document.getElementById('input_src').value;
       model.currentCat.clicks = Number(document.getElementById('input_clicks').value);
-      ADMIN_AREA.classList.add('hideAdminArea');
-      ADMIN_BUTTON.disabled = false;
+      view_menu.updateMenuItem(model.currentCat);
       view_cat.render(model.currentCat);
+      view_admin.hide();
     });
 
     // Add Cancel button event listener
     CANCEL_BUTTON.addEventListener('click', function () {
-      ADMIN_AREA.classList.add('hideAdminArea');
-      ADMIN_BUTTON.disabled = false;
+      view_admin.hide();
     });
-  },
-
-  // Update cat
-  updateCat: function (name, url, clicks) {
-    model.currentCat.name = name;
-    model.currentCat.url = url;
-    model.currentCat.clicks = clicks;
   }
 }
 
@@ -132,9 +125,6 @@ let view_cat = {
     CAT_CLICKS.innerText = cat.clicks;
     CAT_IMG.src = cat.src;
     CAT_IMG.alt = cat.altText;
-  },
-  renderClicks: function (cat) {
-    CAT_CLICKS.innerText = cat.clicks;
   }
 };
 
@@ -146,6 +136,24 @@ let view_menu = {
       let myHTML = `<li>${cat.name}</li>`;
       document.querySelector("ul").innerHTML += myHTML;
     }
+  },
+  updateMenuItem: function (cat) {
+    document.querySelectorAll('li')[cat.index].innerHTML = cat.name;
+  }
+};
+
+// ADMIN VIEW
+let view_admin = {
+  show: function(cat) {
+    document.getElementById('input_name').value = cat.name;
+    document.getElementById('input_src').value = cat.src;
+    document.getElementById('input_clicks').value = cat.clicks;
+    ADMIN_AREA.classList.remove('hideAdminArea');
+    ADMIN_BUTTON.disabled = true;
+  },
+  hide: function() {
+    ADMIN_AREA.classList.add('hideAdminArea');
+    ADMIN_BUTTON.disabled = false;
   }
 };
 
