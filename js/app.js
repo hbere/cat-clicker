@@ -2,9 +2,13 @@
 // Now using MVO (a.k.a. MVC a.k.a. MV*)
 // October 21, 2018
 
-// TODO look for inspiration @ https://github.com/udacity/ud989-cat-clicker-premium-vanilla
-// TODO update to meet Cat Clicker Professional Pro specs @
-// https://classroom.udacity.com/nanodegrees/nd001/parts/b29af831-fa50-4fe9-b30d-ad48476664d1/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3437288625/concepts/35309290390923
+// References:
+  // Inspiration @ https://github.com/udacity/ud989-cat-clicker-premium-vanilla
+  // Cat Clicker Professional Pro specs @ https://classroom.udacity.com/nanodegrees/nd001/parts/b29af831-fa50-4fe9-b30d-ad48476664d1/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3437288625/concepts/35309290390923
+
+// TODO Add image alt text update function to Admin Menu
+// TODO Add image attribution link/label for cat images
+
 
 // DOM ELEMENTS
 const CAT_NAME = document.getElementById("catName");
