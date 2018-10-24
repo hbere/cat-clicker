@@ -18,7 +18,7 @@ const CANCEL_BUTTON = document.getElementById("cancelButton");
 // MODEL
 let model = {
   // Current cat
-  currentCat: null, // Current cat index
+  currentCat: null, // Current cat
 
   // Cats
   cats: [{
@@ -64,20 +64,10 @@ let octopus = {
     view_cat.init(model.currentCat);
 
     // Add cat image event listener
-    // CAT_IMG.addEventListener('click', function () {
-    //   model.currentCat.clicks += 1;
-    //   view_cat.render(model.currentCat);
-    // });
-
-
-    CAT_IMG.addEventListener('click', (function (catCopy) {
-      return function () {
-        model.currentCat = catCopy;
-        model.currentCat.clicks += 1;
-        view_cat.render(model.currentCat);
-      };
-    })(model.currentCat));
-
+    CAT_IMG.addEventListener('click', function () {
+      model.currentCat.clicks += 1;
+      view_cat.render(model.currentCat);
+    });
 
     // Initialize menu
     view_menu.init(model.cats);
@@ -87,6 +77,7 @@ let octopus = {
       let menuItem = document.querySelectorAll("li")[i];
       menuItem.addEventListener('click', function () {
         view_cat.render(model.cats[i]);
+        model.currentCat = model.cats[i];
       });
     }
 
